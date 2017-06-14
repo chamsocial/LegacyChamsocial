@@ -2,7 +2,9 @@
 
 ### 2017-06-14
 - Clean up files & folders
-- update npm packages
+- Update npm packages
+- Update Node.js and haraka
+- Release www on github as open source
 
 ### 2017-04-16
 - Use Mailgun for activation and password reset

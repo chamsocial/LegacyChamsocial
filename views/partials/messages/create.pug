@@ -1,0 +1,31 @@
+
+
+.page.page-create
+  h1= __('NEW_PRIVATE_MESSAGE')
+
+
+  form(ng-submit="submit(message)", novalidate, name="createMessageForm")
+
+    .form-group
+      label(for="subject")= __('SUBJECT')
+      input#subject.form-control(ng-model="message.subject", required, name="subject"
+        autofocus, ng-minlength="3")
+      cham-validation(form="createMessageForm" name="subject")
+
+    .form-group
+      label= __('RECIPIENTS')
+      ui-select(multiple="true", ng-model="message.users", ng-required="true", name="users")
+        ui-select-match(placeholder=__('SELECT_USERS')) {{$item.username}}
+        //- {{ $select.selected.username }}
+        ui-select-choices(repeat="user in dbUsers | AlreadyAddedFilter:$select.selected", refresh="getUsers($select.search)", refresh-delay="400")
+          | {{user.username}}
+          //- div(ng-bind-html="user.username | highlight: $select.search")
+      //- cham-validation(form="createMessageForm" name="users")
+
+    .form-group
+      label(for="message")= __('MESSAGE')
+      textarea.form-control#message(ng-model="message.message", required, name="message")
+      cham-validation(form="createMessageForm" name="message")
+
+    .form-group
+      button.btn.btn-primary(type="submit", submitting)= __('SEND')

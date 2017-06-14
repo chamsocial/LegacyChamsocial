@@ -1,0 +1,36 @@
+
+.page.page-create
+  a.pull-right(ui-sref="app.messages")= __('BACK_TO_ALL_MESSAGES')
+  
+  .desc= __('MESSAGE_SUBJECT')
+  h2 {{ subject }}
+  
+  p.desc= __('MESSAGE_TO')
+    |  {{ users.join(', ') }}
+  //- p.message-users 
+  //-   strong= __('MESSAGE_TO')
+  //-   |  {{ users.join(', ') }}
+
+.page-create
+  .messages
+    .message(ng-repeat="message in messages",
+              ng-class="{ 'message--is-me': main.user.id === message.user_id }")
+      .message__user {{ message.username }}
+      .message__text {{ message.message }}
+      .desc {{ message.created_at | date:'short'}}
+
+
+
+//- Include samme form as new message
+
+.page.page-create
+  h1= __('REPLY')
+  form(ng-submit="submit(reply)", novalidate, name="replyMessageForm")
+
+    .form-group
+      label(for="message")= __('MESSAGE')
+      textarea.form-control#message(ng-model="reply.message", required, name="message")
+      cham-validation(form="replyMessageForm" name="message")
+
+    .form-group
+      button.btn.btn-primary(type="submit", submitting)= __('SEND')

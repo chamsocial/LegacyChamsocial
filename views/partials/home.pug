@@ -1,0 +1,74 @@
+
+.row
+  .col-md-8
+    .page
+      //- Fade?
+      h1= __('WELCOME_TITLE')
+      p
+        strong= __('WELCOME_INTRO')
+        br
+        = __('WELCOME_TEXT')
+      //- .alert.alert-info 🔥 #{' '}
+      //-   a.alert-link(href="/users/settings/emails", ng-if="main.user")
+      //-     = __('HOME_ALERT_MESSAGE') +' »'
+      //-   strong(ng-if="!main.user")
+      //-     = __('HOME_ALERT_MESSAGE') +'!'
+          
+    .page
+      h2= __('POSTS')
+      ul.posts.posts--home(ng-class="{ 'is-loading': !home.posts.length }")
+        li.post(ng-repeat="post in ::home.posts")
+          h3.post__title
+            a(ui-sref="app.single_post({ slug: post.slug })") {{ post.title }}
+          .meta
+            .pull-left
+              a.post-user(ui-sref="app.users({ user_slug: post.user_slug })") {{ post.username }}
+            .pull-right
+              .post-date
+                a(ui-sref="app.group({ group: post.group_slug })") {{ post.group_title }}
+                |  &bull;&nbsp;
+                i.icon-clock-1
+                | {{ post.created_at | date: 'd MMM H:mm' }}
+          .post__comments-count.meta(ng-if="post.comments_count")
+            i.icon-comment
+            | {{ post.comments_count }}
+      p.clearfix
+        a.btn.btn-primary.pull-right(ui-sref="app.posts")= __('VIEW_ALL_POSTS')
+
+  .col-md-4
+    .page(ng-show="main.user")
+      h1= __('HI', '{{ main.user.username }}')
+
+      h4= __('QUICK_LINKS')
+      ul.list-style
+        li
+          a(ui-sref="app.users({ user_slug: main.user.slug })")= __('YOUR_PROFILE')
+        li
+          a(ui-sref="app.messages")= __('PRIVATE_MESSAGES')
+        li
+          a(ui-sref="app.settings_emails")= __('MANAGE_SUBSCRIPTIONS')
+        li
+          a(ui-sref="app.logout")= __('LOGOUT')
+      p
+        a(ui-sref="app.posts_create").btn.btn-primary= __('CREATE_POST')
+
+    .page(ng-hide="main.user")
+      h1= __('LOGIN')
+      form(ng-controller="LoginCtrl", ng-submit="submit(credentials, true)")
+
+        .form-group
+          label(for="username")= __('USERNAME')
+          input#username.form-control(ng-model="credentials.username", required)
+
+        .form-group.clearfix
+          label(for="password")= __('PASSWORD')
+          input#password.form-control(type="password", ng-model="credentials.password", required)
+          small.desc.pull-right
+            a(ui-sref="app.forgot-password")= __('FORGOT_PASSWORD')
+
+        .form-group
+          a.btn.btn-link.pull-right(ui-sref="app.signup")= __('SIGN_UP')
+          button.btn.btn-primary(submitting)= __('LOGIN')
+            
+    .page
+      groups-list

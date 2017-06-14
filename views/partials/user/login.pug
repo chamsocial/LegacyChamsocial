@@ -1,0 +1,20 @@
+
+.page.page-create
+
+  a.pull-right.btn.btn-link.title-btn(ui-sref="app.signup")= __('SIGN_UP')
+  h1= __('LOGIN')
+
+  form(ng-submit="submit(credentials)")
+
+    .form-group
+      label(for="username")= __('USERNAME')
+      input#username.form-control(ng-model="credentials.username", required)
+
+    .form-group.clearfix
+      label(for="password")= __('PASSWORD')
+      input#password.form-control(type="password", ng-model="credentials.password", required)
+      small.desc.pull-right
+        a(ui-sref="app.forgot-password")= __('FORGOT_PASSWORD')
+
+    .form-group
+      button.btn.btn-primary(submitting)= __('LOGIN')

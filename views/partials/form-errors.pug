@@ -1,0 +1,10 @@
+
+
+ul.form-errors(ng-show="form[name].$dirty && form[name].$invalid")
+  li.form-error(ng-show="form[name].$error.unique") {{ messages.unique || 'It\'s already taken, must be unique just like you.' }}
+  li.form-error(ng-show="form[name].$error.required") {{ messages.required || 'The field can\'t be empty.' }}
+  li.form-error(ng-show="form[name].$error.minlength") {{ message.minlength || 'It has to be longer than that' }}
+  li.form-error(ng-show="form[name].$error.maxlength") {{ message.maxlength || 'Oh a bit to long' }}
+  li.form-error(ng-show="form[name].$error.email") {{ message.email || 'Invalid email' }}
+  li.form-error(ng-show="form[name].$error.pattern") {{ message.pattern || 'Invalid character:' }}
+    strong  "{{ form[name].$viewValue | invalidCharacter:pattern }}"

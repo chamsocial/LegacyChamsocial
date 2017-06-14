@@ -1,0 +1,42 @@
+
+h1= __('EMAIL_SUBSCRIPTIONS')
+
+p.lead= __('SET_EMAIL_SUBSCRIPTIONS')
+
+p Direct subscriptions are sent each message individually as soon as they are posted. Daily digests are a single message containing all the posts from the past 24 hours, sent around 18:00 each day - use this if you find direct subscriptions too noisy.
+form(name="emailSettingsForm", ng-submit="submitSubscriptions(groups)", novalidate)
+  .table-responsive
+    table.table.table-striped.email-subscriptions.table-bordered.table-condensed
+      tr
+        th= __('GROUP')
+        th.text-center= __('NO_EMAIL')
+        th.text-center= __('ALL_EMAIL')
+        th.text-center= __('DIGEST_EMAIL')
+      tr(ng-repeat="group in groups")
+        td
+          strong {{ group.title }}
+          |  {{ group.post_count }}
+        td.text-center
+          input(name="group_{{ group.id }}", id="group_{{ group.id }}_none", type="radio", value="none", ng-model="group.type")
+          label(for="group_{{ group.id }}_none")
+            .custom-radio
+        td.text-center
+          input(name="group_{{ group.id }}", id="group_{{ group.id }}_direct", type="radio", value="direct", ng-model="group.type")
+          label(for="group_{{ group.id }}_direct")
+            .custom-radio
+        td.text-center
+          input(name="group_{{ group.id }}", id="group_{{ group.id }}_daily", type="radio", value="daily", ng-model="group.type")
+          label(for="group_{{ group.id }}_daily")
+            .custom-radio
+          //- ui-select(ng-model="group.type")
+          //-   ui-select-match(placeholder="Select email settings") {{ $select.selected }}
+          //-   ui-select-choices(repeat="type in ['none', 'direct', 'daily'] | filter: $select.search")
+          //-     div {{ type }}
+          //- //- select(ng-model="group.type")
+          //- //-   option(value="") No Emails
+          //- //-   option(value="direct") All directly
+          //- //-   option(value="daily") Daily digest (temporary disabled)
+          //-   //- option(value="weekly") Weekly digest
+  .form-group
+    button.btn.btn-primary.btn-save(submit-button="emailSettingsForm")
+      = __('UPDATE_SUBSCRIPTIONS')

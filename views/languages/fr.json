@@ -1,0 +1,19 @@
+{
+
+  "Login": "Le login",
+  "Menu": "Meneu",
+
+  "Content": "Content",
+
+  "New post": "New post",
+  "Title": "Title",
+  "Posted": "Posted:",
+  "create_post": {
+    "Title": "Create new post",
+    "Submit": "Create post"
+  },
+
+  "user": {
+    "settings": "Le settings"
+  }
+}

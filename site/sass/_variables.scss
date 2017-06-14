@@ -1,0 +1,39 @@
+// Variables
+
+//
+// Overwrite bootstrap
+//
+
+$container-large-desktop: 970px;
+$border-radius-base: 3px;
+$border-radius: $border-radius-base;
+
+$stdpadding: 10px;
+
+$font-size-base: 15px;
+
+// Red #F2777A
+
+// Main green color
+// $brand-primary: #26B864// #2095F0;
+// $brand-primary-darken: darken(#26B864, 30%);
+
+$main-color: #0086DB;
+$main-color-darken: darken($main-color, 30%);
+
+// Buttons
+$brand-primary: #26B864; // #46aaeb //#428BCA
+$brand-primary-darken: darken($brand-primary, 30%);
+$btn-success-bg: $main-color;
+
+$box-border-color: #ddd;
+$box-bg: #fff;
+
+
+
+$borderColor: #ddd;
+$linkColor: $brand-primary; //$btn-primary-bg; // #00B7FF
+$font-family: 'Open Sans', sans-serif;
+
+
+$footerHeight: 38px;

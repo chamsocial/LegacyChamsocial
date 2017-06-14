@@ -1,0 +1,45 @@
+/*=============================================*\
+  Base
+\*=============================================*/
+
+html, body { height: 100%; }
+html { font-size: 15px; }
+body {
+  font-size: 1.0rem;
+  font-family: sans-serif;
+  color: #554;
+  background: #ecf0f1;
+}
+
+a {
+  color: $linkColor;
+  &:hover {
+    text-decoration: none;
+    color: $main-color;
+  }
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0 0 $stdpadding * 3;
+  font-family: $font-family;
+  font-weight: 500;
+  word-wrap: break-word;
+  line-height: 1.4em;
+}
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.3rem; font-weight: 200; }
+h4 { font-size: 1.1rem; }
+h5 { font-size: 1.0rem; margin: 0 0 $stdpadding; }
+
+img { max-width: 100%; }
+
+ul { padding: 0; margin: 0; list-style: none; }
+li { padding: 0; margin: 0; }
+.list-style {
+  padding: 0 0 0 20px;
+  margin: 0 0 20px;
+  list-style: disc;
+}
+
+p { margin: 0 0 20px; }

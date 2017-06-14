@@ -1,0 +1,16 @@
+
+.row
+  .col-md-4.col-md-push-8
+    .page
+      h1= __('SETTINGS')
+      ul.list-style
+        li
+          a(ui-sref-active="settings__item--active", ui-sref="app.settings_user")
+            = __('USER')
+        li
+          a(ui-sref-active="settings__item--active", ui-sref="app.settings_emails")
+            = __('EMAILS')
+          
+  .col-md-8.col-md-pull-4
+    .page
+      <div ui-view></div>

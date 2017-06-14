@@ -1,0 +1,51 @@
+.page.page-create
+  a.pull-right.btn.btn-link.title-btn(ui-sref="app.login")= __('LOGIN')
+  h1= __('SIGN_UP')
+
+
+  form(ng-submit="submit(user)", name="signupForm", novalidate)
+
+    .row.form-group
+      .col-md-8
+        label(for="username")= __('USERNAME')
+        input#username.form-control(
+          ng-model="user.username", autofocus, name="username", unique="username",
+          required, ng-minlength="3", ng-maxlength="60", ng-pattern="/^[A-Za-z0-9 _\.-]+$/")
+        .invalid-icon
+      .col-md-4
+        .fake-label
+        cham-validation(form="signupForm" name="username", messages="messages.username", pattern="[A-Za-z0-9 _\.-]+")
+
+    .row.form-group
+      .col-md-8
+        label(for="email")= __('EMAIL')
+        input#email.form-control(type="email", name="email",
+          unique="email", ng-model="user.email", required)
+        .invalid-icon
+      .col-md-4
+        .fake-label
+        cham-validation(form="signupForm" name="email", messages="messages.email")
+
+    .row.form-group
+      .col-md-8
+        label(for="password")= __('PASSWORD')
+        input#password.form-control(type="password", name="password", ng-model="user.password",
+          ng-minlength="6", required)
+        .invalid-icon
+      .col-md-4
+        .fake-label
+        cham-validation(form="signupForm" name="password", messages="messages.password")
+
+    .form-group
+      label= __('PREFERRED_LANGUAGE')
+      .radio-group
+        label.radio-inline
+          input(type="radio", ng-model="user.lang", value="en")
+          |  English
+        label.radio-inline
+          input(type="radio", ng-model="user.lang", value="fr")
+          |  Français
+
+    .form-group
+      button.btn.btn-primary.btn-save(type="submit", submit-button="signupForm")
+        = __('SIGN_UP')

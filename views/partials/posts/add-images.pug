@@ -1,0 +1,39 @@
+.page.page-create
+  h1
+    span= __('ADD_IMAGES')
+
+  ul.row.uploaded-images
+    li.col-sm-4.col-xs-6(ng-repeat="image in images")
+
+      .uploaded-image
+        //- (ng-class="{ 'is-featured-image': image.featured }")
+        div(ng-click="openOverlay(image)")
+
+          .upload-loading(ng-hide="image.id")
+            .uploaded-image-title {{ image.file.name }}
+            .progress.progress-success.progress-active.progress-striped
+              .progress-bar(role="progressbar", aria-valuemin="0", aria-valuemax="100",
+                ng-style="{width: image.percent +'%' }")
+          
+          img(ng-if="image.type == 'image'", ng-src="{{ ::'img/'+ image.user_id + '/100x100/' + image.filename }}")
+          div(ng-if="!image.type || image.type !== 'image'") {{ ::image.filename }}
+
+        .item-overlay.uploaded-image-overlay(ng-show="image.overlay", ng-click="hideOverlay(image)")
+          .overlay-actions
+            //- button.btn.btn-sm.btn-success(ng-click="setThumbnail(image)",
+            //-   ng-disabled="image.featured")
+            //-   i.icon-star-1.show-xs
+            //-   span.hidden-xs  Set as thumbnail
+            //- | &nbsp;
+            button.btn.btn-sm.btn-danger(ng-click="remove(image)")
+              i.icon-trash-1
+              span.hidden-xs #{' '}
+                = __('REMOVE')
+
+          .overlay-close.icon-cancel
+
+  p.pull-right
+    button.btn.btn-success(ng-click="publish()")= __('PUBLISH_POST')
+
+  plupload(post-id="{{ ::postId }}", images="images", total="totalNumImages()", 
+    max="{{ ::maxImages }}", button-text=__('ADD_IMAGE'))

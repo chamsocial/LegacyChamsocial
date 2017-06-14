@@ -1,0 +1,106 @@
+
+.row
+  .col-md-8.col-md-offset-2
+    .page
+      a.pull-right.btn.btn-link.title-btn(href="#", ng-click="privateReply($event, post.user_slug, post.slug)")= __('PRIVATE_REPLY')
+      h1 {{ ::post.title }}
+
+      .post-content(ng-bind-html="::post.content")
+
+      .gallery.clearfix(ng-show="media.length", baguette-box)
+        //- .image-big(ng-show="imageBig", ng-click="imageBig = false")
+        //-   img(ng-show="imageBig", ng-src="{{ imageBig.sizes.large }}")
+        a.image(ng-repeat="image in media", ng-if="image.type === 'image'" href="/{{ 'img/'+ image.user_id +'/1000x/'+ image.filename }}")
+          img(ng-src="/img/{{ image.user_id +'/100x100/'+ image.filename }}")
+      
+      p(ng-repeat="file in media", ng-if="file.type !== 'image'")
+        a(target="_blank", href="/{{ 'uploads/'+ file.user_id +'/'+ file.filename }}")
+          | {{ file.filename }}
+
+      .post-meta.meta
+        .pull-right {{ post.created_at | date:'d MMMM HH:mm' }}
+        a(ui-sref="app.users({ user_slug: post.user_slug })") {{ post.username }}
+
+
+
+    //-
+    //- Comments
+    //-
+
+    .page.comments-wrapper(ng-show="comments.length")
+      h2= __('COMMENTS')
+      ul.comments
+        //- See end of file
+        li(ng-repeat="comment in comments", ng-include="'commentTree'", ng-init="lvl=1")
+
+
+
+    //-
+    //- Add Comments
+    //-
+
+    form#add_comment.comment-form.page(ng-show="main.user", ng-submit="submit(comment)",
+                      ng-controller="CommentCtrl", name="commentForm", novalidate)
+
+      h4.comment-form__title(ng-hide="reply.content")= __('ADD_COMMENT')
+      h2#replyTo(ng-show="reply.content")= __('REPLY_TO')
+
+      .comment.clearfix(ng-show="reply.content")
+        .comment-meta.clearfix
+          h4.comment-user
+            a(ui-sref="app.users({ user_slug: reply.user_slug })") {{ reply.username }}
+            .comment-meta.meta.pull-right
+              span.comment-time {{ reply.created_at | date:'HH:mm' }}
+              |  {{ reply.created_at | date:'d MMM' }}
+
+        .comment-content
+          h5(ng-if="reply.title && post.title != reply.title") {{ reply.title }}
+          div(ng-bind-html="::reply.content")
+
+        button.btn.btn-xs.btn-warning.pull-right(type="button", ng-click="cancelReply()")
+          = __('CANCEL_REPLY')
+
+
+      div
+        label.sr-only(for="comment")= __('COMMENT')
+        .form-group
+          textarea.form-control#comment(ng-model="comment.content", required, ng-minlength="2")
+
+      .alert(ng-class="message.cssClass", ng-show="message.text")
+        | {{ message.text }}
+
+      .form-group
+        button.btn.btn-primary.btn-save(submit-button="commentForm", type="submit")
+          = __('SEND_COMMENT')
+
+    .comment-login.page(ng-hide="main.user")
+      p
+        a.btn.btn-primary(ui-sref="app.login")= __('LOG_IN_TO_COMMENT')
+
+
+
+//-
+//- Single comment
+//-
+
+script(type="text/ng-template", id="commentTree")
+  .comment.clearfix(ng-class="{ 'comment--new': comment.is_new }", ng-attr-id="comment_{{ comment.id }}")
+    h4.comment-user
+      a(ui-sref="app.users({ user_slug: comment.user_slug })") {{ comment.username }}
+      a(href="#comment_{{ comment.id }}").comment-meta.meta.pull-right
+        span.comment-time {{ comment.created_at | date:'HH:mm' }}
+        |  {{ comment.created_at | date:'d MMM' }}
+
+    .comment-content
+      h5(ng-if="comment.title && post.title != comment.title") {{ comment.title }}
+      div(ng-bind-html="::comment.content")
+
+    a.btn.reply(href="#add_comment", ng-show="lvl < 9" ng-click="replyTo(comment)")
+      = __('REPLY')
+
+  ul.comment-children(ng-if="comment.children && comment.children.length",
+                      ng-class="{ 'comment-child-odd': (lvl % 2 === 0) }")
+
+    //- might need a fix
+    //- http://stackoverflow.com/questions/21958856/template-recursion-limitation-digest-loop-in-angularjs
+    li(ng-repeat="comment in comment.children" ng-include="'commentTree'", ng-init="lvl=lvl+1")

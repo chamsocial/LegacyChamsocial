@@ -1,0 +1,15 @@
+[
+  {
+    "name": "Chamsocial",
+    "script": "server.js",
+    "cwd": "/var/www/www.chamsocial.com",
+    "out_file": "/var/www/www.chamsocial.com/logs/chamsocial_pm2.log",
+    "error_file": "/var/www/www.chamsocial.com/logs/chamsocial_pm2_err.log",
+    "instances": 1,
+    "exec_interpreter": "node",
+    "exec_mode": "fork",
+    "env": {
+      "NODE_ENV": "production"
+    }
+  }
+]

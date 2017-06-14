@@ -1,0 +1,58 @@
+
+
+.row
+  .col-md-8
+    .page.media
+      .media-left
+        img(src="images/avatars/user/{{user.id}}.jpg" width="128" class="media-object avatar")
+      .media-body
+        h2 {{ user.username }}
+        
+        p(ng-show="user.first_name")= '{{ user.first_name +\' \'+ user.last_name }}'
+        p= __('MEMBER_SINCE')
+          | : {{ user.created_at | date: date: 'd MMM YYYY' }}
+          br
+          = __('PREFERRED_LANGUAGE')
+          | :&nbsp;
+          span.flag-icon(ng-class="'flag-icon-'+ user.lang ")
+        p(ng-show="user.aboutme")= __('ABOUT_ME')
+          | : {{ user.aboutme  }}
+        p(ng-show="user.interests")= __('MY_INTERESTS')
+          | : {{ user.interests }}
+        p(ng-show="user.jobtitle")= __('JOB_TITLE')
+          | : {{ user.jobtitle }}
+        p(ng-show="user.location")= __('LOCATION')
+          | : {{ user.location }}
+  //- li= __('NUMBER_OF_POSTS', '{{ posts.length }}')
+  
+  .col-md-4
+    .page
+      h2= __('LINKS')
+      ul.list-style
+        li(ng-show="user.username == main.user.username")
+          a(ui-sref="app.messages")
+            = __('PRIVATE_MESSAGES')
+        li(ng-show="user.username == main.user.username")
+          a(ui-sref="app.settings_user")
+            = __('SETTINGS')
+        li(ng-hide="user.username == main.user.username")
+          a(ui-sref="app.message_create({ slug: user.slug })") 
+            = __('SEND_A_MESSAGE', '{{ user.username }}')
+
+.page
+  .posts
+    h2.clearfix
+      .pull-left= __('POSTS')
+      .pull-right Total: {{ posts.length }}
+    ul.posts.posts--home(ng-class="{ 'is-loading': posts === false }")
+      li.post(ng-repeat="post in posts")
+        h3.post__title
+          a(ui-sref="app.single_post({ slug: post.slug })") {{ post.title }}
+        .meta
+          .pull-right
+            .post-date
+              i.icon-clock-1
+              | {{ post.created_at | date: 'd MMM H:mm' }}
+        .post__comments-count.meta(ng-if="post.comments_count")
+          i.icon-comment
+          | {{ post.comments_count }}

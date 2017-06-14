@@ -1,0 +1,36 @@
+form(name="settingsForm", ng-submit="submit(settings)", novalidate)
+  
+  h1= __('USER')
+  
+  .form-group.row
+    .col-md-6
+      label(for="first_name")= __('FIRST_NAME')
+      input.form-control(ng-model="settings.first_name", required)
+    .col-md-6
+      label(for="last_name")= __('LAST_NAME')
+      input.form-control(ng-model="settings.last_name", required)
+
+
+
+  .form-group.row
+    .col-md-6
+      label= __('SELECT_PREFERRED_LANGUAGE')
+      .languages
+        input#langEn.hidden(type="radio", ng-model="settings.lang", required, value="en")
+        label(for="langEn").btn.btn-default
+          .flag-icon.flag-icon-en
+          |  English
+        span= ' '
+        input#langFr.hidden(type="radio", ng-model="settings.lang", required, value="fr")
+        label(for="langFr").btn.btn-default
+          .flag-icon.flag-icon-fr
+          |  Français
+    .col-md-6
+      label(for="timezone")= __('TIMEZONE')
+      ui-select(ng-model="settings.timezone", id="timezone")
+        ui-select-match(placeholder=__('SELECT_TIMEZONE')) {{ $select.selected }}
+        ui-select-choices(repeat="zone in timezones | filter: $select.search")
+          div(ng-bind-html="zone | highlight: $select.search")
+
+  .form-group
+    button.btn.btn-primary(submitting)= __('SAVE')

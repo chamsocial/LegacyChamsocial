@@ -1,0 +1,22 @@
+
+.page
+  h2= __('MESSAGES')
+    a.pull-right.btn.btn-primary(ui-sref="app.message_create")
+      = __('NEW_PRIVATE_MESSAGE')
+
+  table.table.table-striped.table-hover.table-condensed
+    tr
+      th= __('USERS')
+      th= __('SUBJECT')
+      th= __('LAST_MESSAGE')
+    tr.fake-link(
+      ui-sref="app.message_single({ id: message.id })", 
+      ng-repeat="message in messages",
+      ng-class="(message.created_at > message.seen) ? 'info unread' : ''"
+    )
+      td
+        span(ng-repeat="user in message.users")
+          | {{ user.username }}
+          | {{ $last ? '' : ', ' }}
+      td {{ message.subject }}
+      td {{ message.created_at | date }}

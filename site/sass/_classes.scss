@@ -1,0 +1,181 @@
+/*=============================================*\
+  Helper classes
+\*=============================================*/
+
+.meta {
+  @include clearfix;
+  font-size: 0.8rem;
+  color: #999;
+}
+.title {
+  word-wrap: break-word;
+}
+.title-btn {
+  margin-top: 10px;
+}
+.btn-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.btn-submitting[disabled] {
+  cursor: wait;
+  &:after {
+    display: inline-block;
+    content: "\0020";
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+    position: relative;
+    top: 2px;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 100%;
+    border-top-color: #fff;
+    border-bottom-color: #fff;
+    -webkit-animation: spinner 1s linear infinite;
+    -moz-animation:    spinner 1s linear infinite;
+    -o-animation:      spinner 1s linear infinite;
+    animation:         spinner 1s linear infinite;
+  }
+}
+
+.is-loading {
+  position: relative;
+  &:before {
+    display: block;
+    content: "\0020";
+    width: 35px;
+    height: 35px;
+    position: relative;
+    margin: 20px auto 10px;
+    border: 3px solid rgba(0,0,0,.3);
+    border-radius: 100%;
+    border-top-color: #fff;
+    border-bottom-color: #fff;
+    animation:         spinner 1s linear infinite;
+  }
+  &:after {
+    display: block;
+    content: "Loading";
+    text-align: center;
+    margin: 10px auto 20px;
+    animation: opacityBeat 2s linear infinite;
+  }
+}
+
+@keyframes opacityBeat {
+  0%   { opacity: 1 }
+  50%  { opacity: 0.2 }
+  100%  { opacity: 1 }
+}
+@keyframes spinner {
+  0%   { transform: rotate(0deg) }
+  100% { transform: rotate(360deg) }
+}
+
+.alert-highlight {
+  transition: transform 0.2s, box-shadow 0.2s;
+  transform: scale(1.01);
+}
+.alert-danger.alert-highlight {
+  box-shadow: 0 0 15px #EBCDD2;
+}
+
+
+
+.page {
+  @include clearfix;
+  background: $box-bg;
+  padding: 20px 20px 0;
+  border: 1px solid $box-border-color;
+  border-radius: $border-radius-base;
+  margin: 0 0 20px;
+  h1 {
+    border-bottom: 1px solid #26B864;
+    margin: 0 0 $stdpadding * 3;
+    padding: 0 0 $stdpadding;
+  }
+}
+.page-create {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.form-group {
+  padding: 0 0 $stdpadding;
+  position: relative;
+}
+.content { margin: 0 0 $stdpadding; }
+.languages input:checked + label { background: #f5f5f5; }
+.custom-checkbox {
+  border: 1px solid #ccc;
+  height: 14px;
+  width: 14px;
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  line-height: 1em;
+  margin: 0 $stdpadding * 2 0 0;
+  &:before {
+    content: "\00a0";
+  }
+}
+input:checked + label .custom-checkbox:after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 7px;
+  background: transparent;
+  top: 1px;
+  left: 1px;
+  border: 3px solid #000;
+  border-top: none;
+  border-right: none;
+  transform: rotate(-45deg);
+}
+
+.custom-radio {
+  border: 1px solid #ccc;
+  border-radius: 100px;
+  height: 14px;
+  width: 14px;
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  line-height: 1em;
+  margin: 0 $stdpadding * 2 0 0;
+  &:after {
+    content: "\0020";
+    display: block;
+    position: absolute;
+    border-radius: 100%;
+    transition: all .1s;
+    width: 0px; height: 0px;
+    top: 6px; left: 6px;
+  }
+}
+label:hover .custom-radio:after {
+  width: 6px; height: 6px;
+  top: 3px; left: 3px;
+  background: #888;
+}
+input:checked + label .custom-radio:after {
+  width: 8px; height: 8px;
+  top: 2px; left: 2px;
+  background: #000;
+}
+
+.desc {
+  font-size: 12px;
+  color: #777;
+}
+.desc-block {
+  border-bottom: 1px solid #eee;
+  padding: $stdpadding 0;
+}
+
+.desc-error {
+  font-size: 12px;
+  padding: 0 $stdpadding;
+  margin: 0 0 20px 0;
+  color: $state-danger-text;
+}

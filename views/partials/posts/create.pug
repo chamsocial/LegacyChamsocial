@@ -1,0 +1,48 @@
+
+.page.page-create
+
+  h1= __('CREATE_POST')
+
+  form(name="createPostForm", ng-submit="submit(post)", novalidate)
+
+    .form-group
+      label(for="title")= __('TITLE')
+      input.form-control(id="post_title", ng-model="post.title",
+        name="post_title", ng-minlength="3", required)
+      .invalid-icon(ng-click="createPostForm['post_title'].show_errors = true")
+      cham-validation(form="createPostForm" name="post_title")
+
+    .form-group.post-form-contents
+      label(for="content")= __('CONTENT')
+      textarea.form-control(id="post_content", ng-model="post.content",
+        name="post_content", ng-minlength="3", required, msd-elastic="\n",
+        placeholder=__('YOUR_MESSAGE_IN'))
+      .invalid-icon(ng-click="createPostForm['post_message'].show_errors = true")
+      cham-validation(form="createPostForm" name="post_content")
+
+    .form-group
+      label(for="group")= __('GROUP')
+      //- select#group.form-control(ng-model="post.group_id", name="group", required)
+      //-   option(value="") Select group...
+      //-   option(ng-repeat="group in categories", value="{{ group.id }}") {{ group.title }}
+      ui-select(ng-model="post.group_id", ng-required="true", name="group", id="group")
+        ui-select-match(placeholder=__('SELECT_GROUP')) {{ $select.selected.title }}
+        ui-select-choices(repeat="group.id as group in groups | filter: $select.search")
+          div(ng-bind-html="group.title | highlight: $select.search")
+          .desc {{ group.description }}
+      .invalid-icon(ng-click="createPostForm.group.show_errors = true")
+      cham-validation(form="createPostForm", name="group")
+      .desc.desc-block= __('SELECT_GROUP_DESC')
+
+      //Special notice for the chamshare group
+      .text-danger(ng-if="post.group_id === 6")
+        = __('CHAMSHARE_GROUP_NOTICE')
+
+    .form-group
+      .desc-error(ng-if="createPostForm.$submitted && createPostForm.$invalid")
+        = __('INVALID_DESC')
+      button.pull-right.btn.btn-success.btn-save(type="submit", submit-button="createPostForm")
+        = __('ADD_IMAGES_LINK')
+      button.btn.btn-primary.btn-save(
+        type="submit", ng-click="post.publish = true", submit-button="createPostForm") 
+        = __('PUBLISH')

@@ -1,0 +1,127 @@
+doctype html
+html(ng-app="chamSocial", ng-controller="MainCtrl as main")
+  head
+    meta(charset='utf8')
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+
+    title(ng-bind="main.chamGlobal.title +' | Chamsocial'") Chamsocial
+    //- link(rel="canonical", href="")
+
+    meta(name="theme-color", content="#0086DB")
+    link(rel="manifest", href="manifest.json")
+    base(href="/")
+
+    link(href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', href='/components/angular-ui-select/dist/select.min.css')
+    link(rel='stylesheet', href='/css/fontello.min.css')
+    link(rel="stylesheet", href="/components/baguettebox.js/build/css/baguetteBox.css")
+    link(rel='stylesheet', href='/css/style.css?v=1')
+    //- link(rel='stylesheet', href='/js/select.min.css')
+    
+    link(rel="apple-touch-icon", sizes="57x57", href="/apple-touch-icon-57x57.png")
+    link(rel="apple-touch-icon", sizes="60x60", href="/apple-touch-icon-60x60.png")
+    link(rel="apple-touch-icon", sizes="72x72", href="/apple-touch-icon-72x72.png")
+    link(rel="apple-touch-icon", sizes="76x76", href="/apple-touch-icon-76x76.png")
+    link(rel="apple-touch-icon", sizes="114x114", href="/apple-touch-icon-114x114.png")
+    link(rel="apple-touch-icon", sizes="120x120", href="/apple-touch-icon-120x120.png")
+    link(rel="apple-touch-icon", sizes="144x144", href="/apple-touch-icon-144x144.png")
+    link(rel="apple-touch-icon", sizes="152x152", href="/apple-touch-icon-152x152.png")
+    link(rel="apple-touch-icon", sizes="180x180", href="/apple-touch-icon-180x180.png")
+    link(rel="icon", type="image/png", href="/favicon-32x32.png", sizes="32x32")
+    link(rel="icon", type="image/png", href="/android-chrome-192x192.png", sizes="192x192")
+    link(rel="icon", type="image/png", href="/favicon-96x96.png", sizes="96x96")
+    link(rel="icon", type="image/png", href="/favicon-16x16.png", sizes="16x16")
+    meta(name="apple-mobile-web-app-title", content="Chamsocial")
+    meta(name="application-name", content="Chamsocial")
+    meta(name="msapplication-TileColor", content="#0086db")
+    meta(name="msapplication-TileImage", content="/mstile-144x144.png")
+
+  body(ng-class="{'menu-open': menuOpen}")
+
+    .page-wrapper
+      include parts/header
+
+      .container.main
+        block content
+
+      .overlay(ng-click="toggleMenu()")
+
+      include parts/footer
+
+
+    .menu-wrapper(ng-click="toggleMenu()")
+      .main-menu
+        .menu-title= __('MENU')
+        ul
+          li
+            a(ui-sref="app.home")= __('HOME')
+          li
+            a(ui-sref="app.about")= __('ABOUT')
+          li(ng-hide="main.user")
+            a(ui-sref="app.signup")= __('SIGN_UP')
+          li(ng-hide="main.user")
+            a(ui-sref="app.login")= __('LOGIN')
+          li(ng-show="main.user")
+            a(ui-sref="app.settings_user")= __('SETTINGS')
+          li(ng-show="main.user")
+            a(ui-sref="app.logout")= __('LOGOUT')
+
+
+    script(src="/js/lib/rollbar.js")
+
+    //- Angular
+    script(src="/components/angular/angular.min.js")
+    script(src="/components/angular-animate/angular-animate.min.js")
+    script(src="/components/angular-resource/angular-resource.min.js")
+    script(src="/components/angular-sanitize/angular-sanitize.min.js")
+    
+    
+    //- 3-party Angular
+
+    //- Routing
+    script(src="/components/ui-router/release/angular-ui-router.min.js")
+    //- auto grow textareas
+    script(src="/components/angular-elastic/elastic.min.js")
+    //- Nice looking select boxes and multi-select
+    script(src="/components/angular-ui-select/dist/select.min.js")
+    //- pagination
+    script(src="/js/lib/ui-bootstrap/ui-bootstrap-custom-tpls-0.13.3.min.js")
+
+
+    //- 3-party Standalone
+
+    //- Plupload (uploads)
+    script(src="/components/plupload/js/plupload.full.min.js")
+    //- Moment.js (to handle dates in js)
+    script(src="/components/moment/min/moment.min.js")
+
+    script(src="/components/baguettebox.js/dist/baguetteBox.min.js")
+
+
+    //- minified
+    script(src="/js/app.min.js?v=2")
+    
+    //- Track adblocker by loading this file (creat it and add a variable in it)
+    //- and check if a variable in it exist else report
+    //- script(src="/js/ads.js")
+
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-20917377-1', 'auto');
+      ga('send', 'pageview');
+
+
+    <!-- Google Tag Manager -->
+    noscript
+      iframe(src="//www.googletagmanager.com/ns.html?id=GTM-PV7WB6", height="0", width="0", style="display:none;visibility:hidden")
+    script.
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-PV7WB6');
+    <!-- End Google Tag Manager -->

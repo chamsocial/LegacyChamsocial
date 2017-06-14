@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /en/posts
+Disallow: /en/comments
+Disallow: /en/users
+Disallow: /en/groups
+Disallow: /en/messages
+Disallow: /fr/posts
+Disallow: /fr/comments
+Disallow: /fr/users
+Disallow: /fr/groups
+Disallow: /fr/messages
+Disallow: /img

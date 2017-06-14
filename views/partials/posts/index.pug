@@ -1,0 +1,86 @@
+.row
+  .col-md-8
+    .post-options-box.hidden-md.hidden-lg
+      ul.row
+        li.col-xs-6
+          a(href="#", ng-click="tool_show = 'cat'")
+            i.icon-tag
+            | &nbsp;
+            span.hidden-xsa= __('GROUPS')
+        li.col-xs-6
+          a(ui-sref="app.posts_create")
+            i.icon-pencil
+            | &nbsp;
+            span.hidden-xsa= __('CREATE_POST')
+
+      .option-selected(ng-show="tool_show")
+        button.close(type="button", aria-label="Close", ng-click="tool_show = false")
+          span(aria-hidden="true") &times;
+        ui-select(ng-if="tool_show === 'cat'", ng-model="group_id", on-select="goToGroup($item)")
+          ui-select-match(placeholder=__('GO_TO_GROUP')) {{ $select.selected.title }}
+          ui-select-choices(repeat="group.id as group in groups | filter: $select.search")
+            div(ng-bind-html="group.title +'<small class=\"pull-right\">'+ (group.post_count | number ) +'</small>' | highlight: $select.search")
+        .option-search(ng-if="tool_show === 'search'")
+          .input-group
+            input.form-control(placeholder=__('SEARCH'))
+            span.input-group-btn
+              button.btn.btn-primary(type="button")= __('SEARCH')
+
+    
+    .page-title-wrapper
+      pager.mini-pager(total-items="total", ng-model="currentPage",
+        ng-change="pageChanged()"
+        previous-text="<", next-text=">",
+        ng-hide="(itemsPerPage >= total) || !posts.length")
+      h1.text-center= __('POSTS')
+        span(ng-show="group")  - {{ group.title }}
+      p.text-center(ng-show="group") {{ group.description }}
+        
+    ul.posts.list(ng-class="{ 'is-loading': !posts }")
+      li(ng-show="posts && !posts.length")
+        .post.post-box.text-center
+          strong= __('NO_POSTS_FOUND')
+      li(ng-repeat="post in ::posts")
+
+        .posts-divider(ng-if="post.divider") {{ post.divider | moment:'MMMM D' }}
+
+        .post-box.post(ng-if="!post.divider")
+          h3.post__title
+            a(ng-if="!post.divider", ui-sref="app.single_post({ slug: post.slug })")
+              | {{ ::post.title }}
+          .post__comments-count.meta(ng-if="post.comments_count")
+            i.icon-comment
+            | {{ post.comments_count }}
+          .meta
+            .pull-left
+              a.post-user(ui-sref="app.users({ user_slug: post.user_slug })") {{ post.username }}
+            .pull-right
+              .post-date
+                a(ui-sref="app.group({ group: post.group_slug })") {{ post.group_title }}
+                |  &bull;&nbsp;
+                i.icon-clock-1
+                | {{ post.created_at | date: 'H:mm' }}
+
+    pagination.pagination-sm(total-items="total", ng-model="currentPage", max-size="maxSize",
+      boundary-links="false", rotate="true", items-per-page="itemsPerPage",
+      previous-text="«" next-text="»"
+      ng-change="pageChanged()", ng-hide="(itemsPerPage >= total) || !posts.length")
+
+  .col-md-4.hidden-xs.hidden-sm
+    //- .posts-divider &nbsp;
+
+    p
+      a.btn.btn-block.btn-lg.btn-primary(ui-sref="app.posts_create")
+        = __('CREATE_POST')
+
+    .page
+      groups-list
+
+    .page.search
+      h2= __('SEARCH')
+      form.form-group(name="searchForm", ng-click="doSearch()", novalidate)
+        .input-group
+          input.form-control(type="search", ng-model="search", placeholder="E.g car, lost dog, climbing...")
+          span.input-group-btn
+            button.btn.btn-info(type="submit")
+              = __('SEARCH')

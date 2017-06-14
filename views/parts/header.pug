@@ -1,0 +1,34 @@
+
+
+header.header.clearfix
+
+  .container
+
+    a.logo(ui-sref="app.home") 
+      | #{__('SITE_TITLE')}
+      //- img(src="/images/old-logo-320.png", alt="Chamsocial 3.0", width="160")
+
+    nav.top-menu(role="navigation")
+      ul
+        //- Login
+        li(ng-hide="main.user", ng-class="activeMenu('login')")
+          a(ui-sref="app.login")
+            i.icon-lock
+            span= __('LOGIN')
+        //- User
+        li.menu-item-user(ng-show="main.user", ng-class="activeMenu('users')")
+          a(ui-sref="app.users({ user_slug: main.user.slug })")
+            i.icon-user
+            span.hidden-xs {{ main.user.username }}
+        //- Menu
+        li.menu-open-item
+          a(href="#menu", ng-click="toggleMenu($event, this)")
+            i.icon-menu
+            span= __('MENU')
+        li.menu-item--lang
+          a(href="#lang", ng-click="main.changeLang($event, main.chamGlobal.lang_not())")
+            .flag-icon(ng-class="'flag-icon-'+ main.chamGlobal.lang")
+
+
+.container
+  cham-messages

@@ -1,0 +1,12 @@
+{
+  "browser": true,
+  "globalstrict": true,
+  "globals": {
+    "angular": true,
+    "apiToken": true,
+    "console": true,
+    "plupload": true,
+    "moment": true,
+    "baguetteBox": true
+  }
+}

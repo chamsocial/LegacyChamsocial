@@ -6,7 +6,7 @@
 * Redis 3
 
 ### Installation
-* `cp .env.exampe ../.env` and add custom config
+* `cp .env.example ../.env` and add custom config
 * `npm install`
 * `cd site`
 * *  `npm install`

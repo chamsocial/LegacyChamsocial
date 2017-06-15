@@ -1,9 +1,9 @@
 {
   "name": "chamsocial",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "4.6"
+    "node": "7.10"
   },
   "main": "server.js",
   "scripts": {

@@ -8,7 +8,7 @@
 const path = require('path')
 require('dotenv').load({ path: path.resolve(__dirname, '../../', '.env') });
 const bcrypt = require('bcryptjs')
-const fs = require('fs-promise')
+const fs = require('fs')
 const mysql = require('mysql')
 const redisClient = require('../lib/redis');
 
@@ -34,6 +34,14 @@ function query (sql, prepared = []) {
 
 function insert (sql, prepared) {
   return query(sql, prepared).then(data => data.insertId)
+}
+
+function getSQL () {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path.resolve(__dirname, 'chamsocial-schema.sql'), 'utf8', (err, data) => {
+      return err ? reject(err) : resolve(data)
+    })
+  })
 }
 
 /**
@@ -85,7 +93,7 @@ async function createGroup() {
  */
 
 async function init () {
-  const sql = await fs.readFile('chamsocial-schema.sql', 'utf8')
+  const sql = await getSQL()
   await query(sql)
 
   const userId = await insert('INSERT INTO users SET ?', [user()])

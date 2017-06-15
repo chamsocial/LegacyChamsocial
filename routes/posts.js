@@ -99,8 +99,8 @@ module.exports = function (express) {
             user_id: img.user_id
           };
           if (Media.isImage(img.mime)) {
- image.type = 'image';
-}
+            image.type = 'image';
+          }
 
           images.push(image);
         });

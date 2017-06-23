@@ -11,6 +11,7 @@ const bcrypt = require('bcryptjs')
 const fs = require('fs')
 const mysql = require('mysql')
 const redisClient = require('../lib/redis');
+const posts = require('./seeds/posts')
 
 /**
  * DB
@@ -65,22 +66,12 @@ function user () {
   }
 }
 
-function post ({ userId, groupId }) {
-  return {
-    user_id: userId,
-    status: 'published',
-    slug: 'ou-est-alfred',
-    group_id: userId,
-    title: 'Where is Alfred?',
-    content: 'Is he hiding in the batcave?',
-  }
-}
-
 async function createGroup() {
   const groupId = await insert('INSERT INTO groups SET ?', [{ slug: 'chamshare' }])
   const group = {
     group_id: groupId,
     title: 'ChamShare',
+    slug: 'chamshare',
     description: 'General mix of content',
     lang: 'en'
   }
@@ -98,8 +89,12 @@ async function init () {
 
   const userId = await insert('INSERT INTO users SET ?', [user()])
   const groupId = await createGroup()
-  const postId = await insert('INSERT INTO posts SET ?', [post({userId, groupId})])
-  return ':)'
+  const promises = []
+  posts({userId, groupId}).forEach((post, i) => {
+    post.slug += `-${i}`
+    promises.push(insert('INSERT INTO posts SET ?', [post]))
+  })
+  return Promise.all(promises)
 }
 
 init()

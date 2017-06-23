@@ -1,0 +1,19 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "React frontend for chamsocial",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chamsocial/Chamsocial.git"
+  },
+  "author": "Spathon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chamsocial/Chamsocial/issues"
+  },
+  "homepage": "https://github.com/chamsocial/Chamsocial#readme"
+}

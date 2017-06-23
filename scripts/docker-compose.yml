@@ -1,3 +1,6 @@
+# Delete redis data
+# docker ps
+# docker exec -it NAME redis-cli FLUSHALL
 version: '2'
 services:
   db:

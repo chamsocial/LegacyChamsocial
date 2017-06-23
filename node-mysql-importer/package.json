@@ -1,0 +1,42 @@
+{
+  "name": "node-mysql-importer",
+  "version": "0.0.10",
+  "description": "import .sql files using NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marktyers/node-mysql-importer.git"
+  },
+  "keywords": [
+    "nodejs",
+    "mysql",
+    "textfiles",
+    "import"
+  ],
+  "author": "Mark J Tyers",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marktyers/node-mysql-importer/issues"
+  },
+  "homepage": "https://github.com/marktyers/node-mysql-importer#readme",
+  "dependencies": {
+    "fs-promise": "^0.5.0",
+    "jsonschema": "^1.1.0",
+    "mysql": "^2.10.2"
+  },
+  "devDependencies": {
+    "eslint": "^2.5.1",
+    "eslint-plugin-jasmine": "^1.6.0",
+    "eslint-plugin-node": "^1.0.0"
+  },
+	"engines": {
+		"node": ">5.0.0"
+	},
+	"references": [
+		"http://evanhahn.com/make-an-npm-baby/",
+		"https://docs.npmjs.com/cli/link"
+	]
+}

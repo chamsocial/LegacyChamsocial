@@ -104,6 +104,15 @@ imgr.serve(path.join(__dirname, 'public/uploads')).using(app);
 
 app.use('/stats', require('./routes/stats')(express));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
+  if (req.method === 'OPTIONS') {
+    return res.end()
+  }
+  next();
+});
+
 // Signup / Login
 app.use('/v1', require('./routes/auth')(express));
 app.use('/v1/posts', require('./routes/posts')(express));

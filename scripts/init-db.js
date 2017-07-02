@@ -6,11 +6,12 @@
  * password = robin
  */
 const path = require('path')
-require('dotenv').load({ path: path.resolve(__dirname, '../../', '.env') });
-const bcrypt = require('bcryptjs')
+require('dotenv').load({ path: path.resolve(__dirname, '../', '.env') })
 const fs = require('fs')
 const mysql = require('mysql')
-const redisClient = require('../lib/redis');
+const redisClient = require('../lib/redis')
+const generateUsers = require('./seeds/users')
+const generatePosts = require('./seeds/posts')
 
 /**
  * DB
@@ -24,10 +25,10 @@ const db = mysql.createPool({
   port: process.env.MYSQL_PORT || 3306,
   multipleStatements: true,
   charset: 'utf8mb4'
-});
+})
 
 function query (sql, prepared = []) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     db.query(sql, prepared, (err, data) => (err ? reject(err) : resolve(data)))
   })
 }
@@ -48,35 +49,7 @@ function getSQL () {
  * Data
  */
 
-function user () {
-  return {
-    username: 'Batman',
-    email: 'batman@example.com',
-    email_domain: 'example.com',
-    password: bcrypt.hashSync('robin', 8),
-    first_name: 'Bruce',
-    last_name: 'Nanananananana...',
-    company_name: 'Chamsocial',
-    slug: 'batman',
-    interests: '',
-    aboutme: '',
-    lang: 'en',
-    activated: 1
-  }
-}
-
-function post ({ userId, groupId }) {
-  return {
-    user_id: userId,
-    status: 'published',
-    slug: 'ou-est-alfred',
-    group_id: userId,
-    title: 'Where is Alfred?',
-    content: 'Is he hiding in the batcave?',
-  }
-}
-
-async function createGroup() {
+async function createGroup () {
   const groupId = await insert('INSERT INTO groups SET ?', [{ slug: 'chamshare' }])
   const group = {
     group_id: groupId,
@@ -96,9 +69,9 @@ async function init () {
   const sql = await getSQL()
   await query(sql)
 
-  const userId = await insert('INSERT INTO users SET ?', [user()])
+  const users = await generateUsers(insert)
   const groupId = await createGroup()
-  const postId = await insert('INSERT INTO posts SET ?', [post({userId, groupId})])
+  await generatePosts(insert, users, groupId)
   return ':)'
 }
 
@@ -111,5 +84,7 @@ init()
   })
   .catch(e => {
     console.log(e)
+    console.log('DIE!!!!')
     db.end()
+    redisClient.quit()
   })

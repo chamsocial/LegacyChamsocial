@@ -1,9 +1,12 @@
 # Changelog
 
+### 2017-07-25
+- Downgrade haraka (from 2.8.13 to 2.8.2)
+
 ### 2017-06-14
 - Clean up files & folders
 - Update npm packages
-- Update Node.js and haraka
+- Update Node.js and haraka (from 2.8.2 to 2.8.13)
 - Release www on github as open source
 
 ### 2017-04-16
